@@ -10,6 +10,7 @@ const {ObjectId} = require('mongodb')
 const {connectToDb, getDb} = require('./dbconnection.cjs')
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 app.use(cors())
 
@@ -87,7 +88,7 @@ app.get('/get-entries', function(request, response) {
 
 //delete the data
 
-app.delete('/delete-entry', function(request, response) {
+app.delete('/delete-entry/:id ', function(request, response) {
     if(ObjectId.isValid(request.query.id)) {
         db.collection('ExpensesData').deleteOne({
             _id : new ObjectId(request.query.id)
